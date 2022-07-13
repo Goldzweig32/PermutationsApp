@@ -13,10 +13,8 @@ if (builder.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.RunAsync().GetAwaiter().GetResult();
+app.RunAsync("http://localhost:8000").GetAwaiter().GetResult();
