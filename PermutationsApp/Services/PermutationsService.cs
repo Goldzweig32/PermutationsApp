@@ -23,6 +23,11 @@ public class PermutationsService
 
         //Create histogram of the given word
         var wordDictionary = GetWordDictionary(givenWord);
+
+        if (givenWord.Length > EnglishDictionarySingleton.Instance.EnglishDictionary.Count || givenWord.Length < 1)
+        {
+            return new List<string>();
+        }
         
         //Get the relevant dictionary (list that contains only the words in the length of the given word)
         var onlyRelevantWordsByLength = EnglishDictionarySingleton.Instance.EnglishDictionary[givenWord.Length - 1];
