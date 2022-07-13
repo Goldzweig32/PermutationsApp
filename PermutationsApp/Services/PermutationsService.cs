@@ -9,15 +9,10 @@ public class PermutationsService
     public ApiStatsResponse GetStats()
     {
         Console.WriteLine($"[{DateTime.Now} | INFO] Stats is being prepared!");
-        return new ApiStatsResponse()
-        {
-            AvgProcessingTimeNs = StatsSingleton.Instance.TotalRequests != 0 ? StatsSingleton.Instance.SumProcessingTimeNs / StatsSingleton.Instance.TotalRequests : 0,
-            TotalRequests = StatsSingleton.Instance.TotalRequests,
-            TotalWords = StatsSingleton.Instance.TotalWords != 0 ? StatsSingleton.Instance.TotalWords : EnglishDictionarySingleton.Instance.EnglishDictionary.Count
-        };
+        return StatsSingleton.Instance.GetStats();
     }
 
-    public List<string> SimilarWords(string givenWord)
+    public async Task<List<string>> SimilarWords(string givenWord)
     {
         Console.WriteLine($"[{DateTime.Now} | INFO] Word permutation process start!");
 
@@ -32,7 +27,7 @@ public class PermutationsService
         //Get the relevant dictionary (list that contains only the words in the length of the given word)
         var onlyRelevantWordsByLength = EnglishDictionarySingleton.Instance.EnglishDictionary[givenWord.Length - 1];
 
-        var listOfPermutations = PermutationsOfGivenWord(wordDictionary, onlyRelevantWordsByLength);
+        var listOfPermutations = await PermutationsOfGivenWord(wordDictionary, onlyRelevantWordsByLength, givenWord.Length);
         
         if (listOfPermutations.Contains(givenWord))
         {
@@ -42,46 +37,35 @@ public class PermutationsService
         Console.WriteLine($"[{DateTime.Now} | INFO] Word permutation process end!");
         return listOfPermutations;
     }
-    
 
-    private List<string> PermutationsOfGivenWord(Dictionary<char, int> wordDictionary, List<string> engDictionary)
+    private async Task<List<string>> PermutationsOfGivenWord(Dictionary<char, int> wordDictionary, List<string> engDictionary, int givenWordLength)
     {
         var listOfPermutations = new List<string>();
         
         //Iterating over the words in the dictionary
         foreach (var word in engDictionary)
         {
+            var counter = 0;
             var cloneWordDictionary = new Dictionary<char, int>(wordDictionary);
-            var isPossiblePermutation = true;
             //Iterating over the letters
             foreach (var letter in word)
             {
                 //If the letter exists in the word histogram reduce the counter of this letter in 1
                 if (cloneWordDictionary.ContainsKey(letter))
                 {
+                    if (cloneWordDictionary[letter] > 0)
+                    {
+                        counter++;
+                    }
                     cloneWordDictionary[letter]--;
                 }
                 else
                 {
-                    isPossiblePermutation = false;
                     break;
                 }
             }
 
-            if (isPossiblePermutation)
-            {
-                foreach (var entry in cloneWordDictionary)
-                {
-                    //If all the values in the histogram reduced to zero it's a match
-                    if (entry.Value != 0)
-                    {
-                        isPossiblePermutation = false;
-                        break;
-                    }
-                }
-            }
-
-            if (isPossiblePermutation)
+            if (counter == givenWordLength)
             {
                 Console.WriteLine($"[{DateTime.Now} | INFO] {word} is a permutation of the given word");
                 listOfPermutations.Add(word);

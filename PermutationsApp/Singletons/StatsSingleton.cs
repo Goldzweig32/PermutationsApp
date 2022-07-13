@@ -1,12 +1,14 @@
+using PermutationsApp.DataModels;
+
 namespace PermutationsApp.Singletons;
 
 public sealed class StatsSingleton
 {
     public int TotalWords { get; set; }
     
-    public int TotalRequests { get; set; }
+    private int TotalRequests { get; set; }
     
-    public int SumProcessingTimeNs { get; set; }
+    private int SumProcessingTimeNs { get; set; }
     
     private static StatsSingleton instance = null;
     private static readonly object padlock = new object();
@@ -30,6 +32,30 @@ public sealed class StatsSingleton
                 }
                 return instance;
             }
+        }
+    }
+
+    public void UpdateStats(int processingTimeNs)
+    {
+        lock (padlock)
+        {
+            TotalRequests++;
+            SumProcessingTimeNs += processingTimeNs;
+        }
+    }
+
+    public ApiStatsResponse GetStats()
+    {
+        lock (padlock)
+        {
+            var stats = new ApiStatsResponse()
+            {
+                AvgProcessingTimeNs = TotalRequests != 0 ? SumProcessingTimeNs / TotalRequests : 0,
+                TotalRequests = TotalRequests,
+                TotalWords = TotalWords != 0 ? TotalWords : EnglishDictionarySingleton.Instance.EnglishDictionary.Count
+            };
+            
+            return stats;
         }
     }
 }

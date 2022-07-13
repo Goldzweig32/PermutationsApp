@@ -35,24 +35,22 @@ public class PermutationsController
 
     [HttpGet]
     [Route("similar")]
-    public JsonResult GetSimilarWords([FromRoute] ApiWordObj apiWordObj)
+    public async Task<JsonResult> GetSimilarWords([FromRoute] ApiWordObj apiWordObj)
     {
         try
         {
             //Get start time of the request to measuring processing time
             var start = GetNanoseconds();
             
-            //Count the number of requests
-            StatsSingleton.Instance.TotalRequests++;
-            
             var service = new PermutationsService();
-            var result = service.SimilarWords(apiWordObj.Word);
+            var result = await service.SimilarWords(apiWordObj.Word);
 
             var end = GetNanoseconds();
+            var processingTime = (int)(end - start);
             
-            //Calculate processing time and sum it
-            StatsSingleton.Instance.SumProcessingTimeNs += (int)(end - start);
-        
+            //Updating the stats
+            StatsSingleton.Instance.UpdateStats(processingTime);
+            
             return new JsonResult(new {similar = result});
         }
         catch (Exception e)
