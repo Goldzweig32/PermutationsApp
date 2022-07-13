@@ -8,7 +8,7 @@ public sealed class StatsSingleton
     
     private int TotalRequests { get; set; }
     
-    private int SumProcessingTimeNs { get; set; }
+    private long SumProcessingTimeNs { get; set; }
     
     private static StatsSingleton instance = null;
     private static readonly object padlock = new object();
@@ -35,7 +35,7 @@ public sealed class StatsSingleton
         }
     }
 
-    public void UpdateStats(int processingTimeNs)
+    public void UpdateStats(long processingTimeNs)
     {
         lock (padlock)
         {
@@ -50,11 +50,11 @@ public sealed class StatsSingleton
         {
             var stats = new ApiStatsResponse()
             {
-                AvgProcessingTimeNs = TotalRequests != 0 ? SumProcessingTimeNs / TotalRequests : 0,
                 TotalRequests = TotalRequests,
                 TotalWords = TotalWords != 0 ? TotalWords : EnglishDictionarySingleton.Instance.EnglishDictionary.Count
             };
-            
+            var avgProcessingTimeNs = TotalRequests != 0 ? SumProcessingTimeNs / TotalRequests : 0;
+            stats.AvgProcessingTimeNs = (int) avgProcessingTimeNs;
             return stats;
         }
     }

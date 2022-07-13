@@ -46,7 +46,7 @@ public class PermutationsController
             var result = await service.SimilarWords(apiWordObj.Word);
 
             var end = GetNanoseconds();
-            var processingTime = (int)(end - start);
+            var processingTime = end - start;
             
             //Updating the stats
             StatsSingleton.Instance.UpdateStats(processingTime);
