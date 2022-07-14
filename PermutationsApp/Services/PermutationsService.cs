@@ -1,33 +1,39 @@
 using PermutationsApp.DataModels;
-using PermutationsApp.Singletons;
 
 namespace PermutationsApp.Services;
 
 public class PermutationsService
 {
-
+    public PermutationsService(StatsService statsService, EnglishDictionaryService englishDictionaryService)
+    {
+        StatsService = statsService;
+        EnglishDictionaryService = englishDictionaryService;
+    }
+    
+    private StatsService StatsService { get; }
+    private EnglishDictionaryService EnglishDictionaryService { get; }
+    
     public ApiStatsResponse GetStats()
     {
         Console.WriteLine($"[{DateTime.Now} | INFO] Stats is being prepared!");
-        return StatsSingleton.Instance.GetStats();
+        return StatsService.GetStats();
     }
 
     public async Task<List<string>> SimilarWords(string givenWord)
     {
         Console.WriteLine($"[{DateTime.Now} | INFO] Word permutation process start!");
 
-        //Create histogram of the given word
-        var wordDictionary = GetWordDictionary(givenWord);
-
-        if (givenWord.Length > EnglishDictionarySingleton.Instance.EnglishDictionary.Count || givenWord.Length < 1)
+        var words = EnglishDictionaryService.EnglishDictionary
+            .GetValueOrDefault(EnglishDictionaryService.GetWordHash(givenWord));
+        if (words == null)
         {
             return new List<string>();
         }
-        
-        //Get the relevant dictionary (list that contains only the words in the length of the given word)
-        var onlyRelevantWordsByLength = EnglishDictionarySingleton.Instance.EnglishDictionary[givenWord.Length - 1];
 
-        var listOfPermutations = await PermutationsOfGivenWord(wordDictionary, onlyRelevantWordsByLength, givenWord.Length);
+        //Create histogram of the given word
+        var wordDictionary = GetWordDictionary(givenWord);
+
+        var listOfPermutations = await PermutationsOfGivenWord(wordDictionary, words, givenWord.Length);
         
         if (listOfPermutations.Contains(givenWord))
         {
@@ -37,11 +43,11 @@ public class PermutationsService
         Console.WriteLine($"[{DateTime.Now} | INFO] Word permutation process end!");
         return listOfPermutations;
     }
-
-    private async Task<List<string>> PermutationsOfGivenWord(Dictionary<char, int> wordDictionary, List<string> engDictionary, int givenWordLength)
+    
+    private static async Task<List<string>> PermutationsOfGivenWord(Dictionary<char, int> wordDictionary, List<string> engDictionary, int givenWordLength)
     {
         var listOfPermutations = new List<string>();
-        
+
         //Iterating over the words in the dictionary
         foreach (var word in engDictionary)
         {
@@ -75,21 +81,10 @@ public class PermutationsService
         return listOfPermutations;
     }
 
-    private Dictionary<char, int> GetWordDictionary(string word)
+    private static Dictionary<char, int> GetWordDictionary(string word)
     {
-        var dictionary = new Dictionary<char, int>();
-        foreach (var letter in word)
-        {
-            if (dictionary.ContainsKey(letter))
-            {
-                dictionary[letter]++;
-            }
-            else
-            {
-                dictionary.Add(letter, 1);
-            }
-        }
-
-        return dictionary;
+        return word
+            .GroupBy(v => v)
+            .ToDictionary(v => v.Key, v => v.Count());
     }
 }

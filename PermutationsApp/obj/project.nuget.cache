@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xS5eINFhJBQ6Tcpad/vXGPNtT2l/E0lkcUXFRQBQ6zeBwW7tCdSMgHrFqYs0e6SUjmZViRVFDAtOqVHoyZzm+Q==",
+  "dgSpecHash": "6l+5fmWwgE2g++WAWLeFcOyRRxozjjZP/qdF8Fn/ZDQgpo4cSp3o36y9xRLzFBTk0aDif5qrflVeyskCEu2qXg==",
   "success": true,
   "projectFilePath": "/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/PermutationsApp.csproj",
-  "expectedPackageFiles": [
-    "/Users/yanivgoldzweig/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
-    "/Users/yanivgoldzweig/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
-    "/Users/yanivgoldzweig/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
-    "/Users/yanivgoldzweig/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
-    "/Users/yanivgoldzweig/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
-    "/Users/yanivgoldzweig/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.2.3/swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

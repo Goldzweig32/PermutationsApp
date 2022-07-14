@@ -1,12 +1,8 @@
-/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/DB/words_clean.txt
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/PermutationsApp
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/appsettings.Development.json
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/appsettings.json
+/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/DB/words_clean.txt
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/PermutationsApp.dll
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/PermutationsApp.deps.json
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/PermutationsApp.runtimeconfig.json
 /Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/PermutationsApp.pdb
-/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/Microsoft.OpenApi.dll
-/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/Swashbuckle.AspNetCore.Swagger.dll
-/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/Swashbuckle.AspNetCore.SwaggerGen.dll
-/Users/yanivgoldzweig/RiderProjects/PermutationsApp/PermutationsApp/bin/Debug/net6.0/publish/Swashbuckle.AspNetCore.SwaggerUI.dll

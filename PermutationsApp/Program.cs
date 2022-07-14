@@ -1,4 +1,4 @@
-using PermutationsApp.Singletons;
+using PermutationsApp.Services;
 
 namespace PermutationsApp;
 
@@ -8,9 +8,9 @@ static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddControllers();
-        builder.Services.AddSingleton<StatsSingleton>();
-        builder.Services.AddSingleton<EnglishDictionarySingleton>();
-        EnglishDictionarySingleton.Instance.Initialize();
+        builder.Services.AddSingleton<StatsService>();
+        builder.Services.AddSingleton<EnglishDictionaryService>();
+        builder.Services.AddSingleton<PermutationsService>();
 
         var app = builder.Build();
 
@@ -22,7 +22,7 @@ static class Program
         app.UseAuthorization();
 
         app.MapControllers();
-
+        
         await app.RunAsync("http://localhost:8000");
     }
 }
